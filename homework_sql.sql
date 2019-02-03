@@ -143,4 +143,33 @@ select first_name, last_name from actor
       )
    );
 
+-- 7C
 
+select first_name, last_name, email, country from customer cs 
+join  address ad on (cs.address_id = ad.address_id)
+join city ct on (ad.city_id = ct.city_id)
+join country cn on (ct.country_id = cn.country_id)
+where cn.country = 'canada';
+
+-- 7D
+
+select title, cs.name from film fm
+join film_category fc on (fm.film_id = fc.film_id)
+join category cs on (cs.category_id = fc.category_id)
+where name = 'family';
+
+-- 7E
+
+select title, count(title) as 'Rentals' from film fm
+join inventory inv on (fm.film_id = inv.film_id)
+join rental rn on (inv.inventory_id = rn.inventory_id)
+group by title
+order by rentals desc;
+
+-- 7F
+
+select st.store_id, sum(amount) as Gross from payment py
+join rental rn on (py.rental_id = rn.rental_id)
+join inventory inv on (inv.inventory_id = rn.inventory_id)
+join store st on (st.store_id = inv.store_id)
+group by st.store_id;
